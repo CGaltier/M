@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" nextobjectid="1">
  <tileset firstgid="1" name="Tiles_v1" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="25">
-  <image source="../../art/tiles_base/Tiles_v1.png" trans="ff00ff" width="325" height="325"/>
+  <image source="Tiles_v1.png" trans="ff00ff" width="325" height="325"/>
  </tileset>
  <layer name="Calque de Tile 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmNkOwyAMBN37bvqS///VgNqoCEGJW2xDtSPtU6TII8ccIQIAAAAAAD2xdnm4nDPpAe+wKmRnVt0ylji04jPQ+/u4R882xPOwdDkENZwSz/fEd0m9R5rQIzXL44d6W/LgzkCLHhIO2h5SDpoekg5aHtIOWwUHzzfrKCdahOtsr72Q8Li4HF/RpLaHxZ7ngQc8JIAHPCSo7THfWeK7pDRS+7l2X+DRlseVnmeh2ufef5l3K4+5L7lw+xX/a9Fev3L82i+r/sTAoy2P0vyUctMvGQAA1JgAOD0F3Q==
+   eJzt2dsOgjAMBuAJQzzrje//qrIooWmYWzfWlaV/8l8ZF77UIQdrjLGoh19dTkLaB4oNLTpga6dVx4ga45CQFIeLtJmEHGdQGHzstS2pDhd83LVnAkNx4LTikBR1yAq3o5v6mnrxNDWcDmdY+x+CHRLX5nLEGHI8WzqeZvl9PNBnPdFBtWzpGMExrH3/SHT41uF0rO3l904c1D0g0VHCwO0oZeB0lDRwOUobrIlPjiPlPEopJTkOeJ6tOQtpjqtZnk9RI8mRc02nDnWoQx3qoHe+Z8H3kntz5MxFHe04buZ7LbT1dS+3A67RgmOei6/UeeFnLTHnL47nibnzit2rsENE1bFvR2j/hHr/s3bnaQlHyahDVtThf7dXo607Pt6EFcE=
   </data>
  </layer>
 </map>

@@ -1,16 +1,21 @@
 package com.cgaltier.mgame;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver.Resolution;
+import com.badlogic.gdx.utils.Logger;
 
 /**
  * Created by Christian on 22/12/2015.
  */
 public class Global {
    public static Global instance=null;
+   public static Logger logger;
    public static final float WORLD_HEIGHT = 60.0f;//world is 60 whatever (let's say km) tall.
 
    private Global (){
       instance =this;
+      logger = new Logger(Gdx.app.getClass().toString(),Logger.INFO);
+      logger.info("Creation");
    }
    public static Global getInstance(){
       if (instance==null)
