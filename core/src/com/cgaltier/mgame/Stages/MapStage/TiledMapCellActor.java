@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 /**
  * Created by Christian on 22/12/2015.
  */
+//useless
+/*
 public class TiledMapCellActor extends Actor {
    private TiledMap tiledMap;
    private TiledMapTileLayer tileLayer;
@@ -18,3 +20,4 @@ public class TiledMapCellActor extends Actor {
       this.cell = cell;
    }
 }
+*/

@@ -1,13 +1,15 @@
 package com.cgaltier.mgame.Stages.MapStage;
-
+/*
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import com.cgaltier.mgame.Stages.MapStage.TiledMapActor;
-
+*/
 /**
  * Created by Christian on 22/12/2015.
  */
+//useless now
+/*
 public class TiledMapClickListener extends ClickListener {
       private TiledMapActor actor;
       public TiledMapClickListener  (TiledMapActor actor){
@@ -20,3 +22,4 @@ public class TiledMapClickListener extends ClickListener {
          actor.getClickedCell(x,y);
       }
    }
+*/
