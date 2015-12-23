@@ -1,11 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="63" tileheight="63" backgroundcolor="#000000" nextobjectid="1">
  <tileset firstgid="1" name="Tiles_v1" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="25">
   <image source="Tiles_v1.png" trans="ff00ff" width="325" height="325"/>
+  <tile id="16">
+   <properties>
+    <property name="SelectionTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="LifePodTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="MinePodTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="ProductionPodTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="MaintenancePodTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="MedicalPodTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="RecyclingPodTile" value="1"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="SpaceshipTile" value="1"/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="Calque de Tile 1" width="50" height="50">
+ <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt2dsOgjAMBuAJQzzrje//qrIooWmYWzfWlaV/8l8ZF77UIQdrjLGoh19dTkLaB4oNLTpga6dVx4ga45CQFIeLtJmEHGdQGHzstS2pDhd83LVnAkNx4LTikBR1yAq3o5v6mnrxNDWcDmdY+x+CHRLX5nLEGHI8WzqeZvl9PNBnPdFBtWzpGMExrH3/SHT41uF0rO3l904c1D0g0VHCwO0oZeB0lDRwOUobrIlPjiPlPEopJTkOeJ6tOQtpjqtZnk9RI8mRc02nDnWoQx3qoHe+Z8H3kntz5MxFHe04buZ7LbT1dS+3A67RgmOei6/UeeFnLTHnL47nibnzit2rsENE1bFvR2j/hHr/s3bnaQlHyahDVtThf7dXo607Pt6EFcE=
+  </data>
+ </layer>
+ <layer name="Selection" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
+  </data>
+ </layer>
+ <layer name="Building" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
   </data>
  </layer>
 </map>
