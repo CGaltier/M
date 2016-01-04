@@ -1,9 +1,12 @@
 package com.cgaltier.mgame.Screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.backends.lwjgl.audio.Mp3;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.cgaltier.mgame.MAssets;
 import com.cgaltier.mgame.MGame;
+import com.cgaltier.mgame.Stages.UIStage.MyTextButton;
 import com.cgaltier.mgame.Utils.Global;
 
 /**
@@ -22,6 +27,7 @@ import com.cgaltier.mgame.Utils.Global;
  */
 public class MainMenuScreen extends AbstractMScreen {
    Stage UIMainMenu;
+   Sound plic;
    public MainMenuScreen(MGame game) {
       super(game);
       this.game = game;
@@ -33,11 +39,14 @@ public class MainMenuScreen extends AbstractMScreen {
       Table table = new Table();
       UIMainMenu .addActor(table);
       table.setFillParent(true);
-      TextButton button = new TextButton("Start Game", game.mAssets.getSkin());
+      MyTextButton button = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+
       button.addListener(new ChangeListener() {
          @Override
          public void changed(ChangeEvent event, Actor actor) {
             //Global.logger.info("button changed");
+            MAssets.getThisInstance().getPlicSound().play();
+
             setGameScreen();
          }
       });

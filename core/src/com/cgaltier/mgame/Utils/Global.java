@@ -12,6 +12,7 @@ public class Global {
    public static Logger logger;
    public static final float WORLD_HEIGHT = 60.0f;//world is 60 whatever (let's say km) tall.
    public static final String SKIN_ASSET="skin.json";
+   public static final String PLIC_SOUND="plic.mp3";
 
    private Global (){
       instance =this;

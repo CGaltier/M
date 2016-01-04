@@ -59,7 +59,9 @@ public class GameScreen extends AbstractMScreen {
       mapStage = new TiledMapStage(tiledMap, mapScale, game);
       mapStage.getViewport().setCamera(camera);
 
-      uiStage = new UIStage();
+      uiStage = new UIStage(this.game);
+      //uiStage.setViewport(mapStage.getViewport());
+
 
       inputMultiplexer.addProcessor(uiStage);
       inputMultiplexer.addProcessor(mapStage);
@@ -71,6 +73,7 @@ public class GameScreen extends AbstractMScreen {
       camera.setToOrtho(false, Global.WORLD_HEIGHT * width / (float) height, Global.WORLD_HEIGHT);
       //camera.setToOrtho(false,width,height);
       camera.update();
+      uiStage.getViewport().setScreenSize(width, height);
 
       //batch.setProjectionMatrix(camera.combined);
    }
@@ -78,6 +81,7 @@ public class GameScreen extends AbstractMScreen {
    @Override
    public void show() {
       Gdx.input.setInputProcessor(inputMultiplexer);
+
    }
 
    @Override
@@ -85,11 +89,15 @@ public class GameScreen extends AbstractMScreen {
       Gdx.gl.glClearColor(1, 0, 0, 1);
       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
       camera.update();
-      tiledMapRenderer.setView(camera);
       uiStage.act(delta);
       mapStage.act(delta);
 
+      //tiledMapRenderer.setView(camera);
+      tiledMapRenderer.setView(camera);
+
       tiledMapRenderer.render();
+      uiStage.draw();
+
    }
 
    @Override

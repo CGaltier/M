@@ -26,7 +26,7 @@ public class TiledMapStage extends AbstractStage{
    int currentCellX;
    int currentCellY;
    boolean hasCurrentCellSelected;
-   Vector3 touchedMiddleButton ;
+   Vector3 touchedDragStart;
    Vector3 lastTouched;
    boolean dragging ;
    MGame game ;
@@ -42,7 +42,7 @@ public class TiledMapStage extends AbstractStage{
       this.mapScale = 1.0f/mapScale;
       this.game = game;
       dragging = false ;
-      touchedMiddleButton = new Vector3();
+      touchedDragStart = new Vector3();
       lastTouched = new Vector3();
 
       hasCurrentCellSelected=false;
@@ -124,11 +124,12 @@ public class TiledMapStage extends AbstractStage{
    public boolean touchDown (int x, int y, int pointer, int button){
 
       if (button == Input.Buttons.MIDDLE){
-         Global.logger.info("touch screen Middle button pos "+x+" "+y);
-         touchedMiddleButton.set((float) x, (float) y, 0.0f);
-         ((OrthographicCamera)this.getViewport().getCamera()).unproject(touchedMiddleButton);
-         lastTouched.set ( touchedMiddleButton);
+         Global.logger.info("touch screen Middle button pos " + x + " " + y);
+         touchedDragStart.set((float) x, (float) y, 0.0f);
+         ((OrthographicCamera) this.getViewport().getCamera()).unproject(touchedDragStart);
+         lastTouched.set(touchedDragStart);
          dragging = true;
+
          return true;
       }
       if (button == Input.Buttons.LEFT){
@@ -136,6 +137,15 @@ public class TiledMapStage extends AbstractStage{
          Vector3 clicked = new Vector3(x,y,0.0f);
          getCamera().unproject(clicked);
          processCellClicked(clicked.x, clicked.y);
+
+
+         ////---- drag on left click
+         touchedDragStart.set(clicked);
+
+         lastTouched.set(touchedDragStart);
+         dragging = true;
+
+         return true;
       }
       return false;
    }
@@ -157,12 +167,12 @@ public class TiledMapStage extends AbstractStage{
       if (dragging ) {
          Global.logger.info("drag screen pos " + x + " " + y);
 
-         touchedMiddleButton.set(x, y, 0.0f);
-         ((OrthographicCamera)this.getViewport().getCamera()).unproject(touchedMiddleButton);
+         touchedDragStart.set(x, y, 0.0f);
+         ((OrthographicCamera)this.getViewport().getCamera()).unproject(touchedDragStart);
          Global.logger.info("drag screen last" + lastTouched.x + " " + lastTouched.y);
-         Global.logger.info("drag screen current" + touchedMiddleButton.x+ " " + touchedMiddleButton.y);
-         float diffX = lastTouched.x - touchedMiddleButton.x;
-         float diffY = lastTouched.y - touchedMiddleButton.y;
+         Global.logger.info("drag screen current" + touchedDragStart.x+ " " + touchedDragStart.y);
+         float diffX = lastTouched.x - touchedDragStart.x;
+         float diffY = lastTouched.y - touchedDragStart.y;
          Global.logger.info("drag screen move" + diffX + " " + diffY);
          ((OrthographicCamera)this.getViewport().getCamera()).position.set(((OrthographicCamera)this.getViewport().getCamera()).position.x + diffX,
          ((OrthographicCamera)this.getViewport().getCamera()).position.y + diffY, 0.0f);
