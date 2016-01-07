@@ -34,7 +34,6 @@ public class UIStage extends Stage {
    public UIStage(MGame game){
       super();
       this.getViewport().update(Gdx.graphics.getHeight(), Gdx.graphics.getHeight(), true);
-      //this.getViewport().setScreenSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight());
       this.game = game ;
 
 
@@ -88,11 +87,13 @@ public class UIStage extends Stage {
       button2.addListener(buttonChangedListener);
 
 
-      RightSideUI = new VerticalGroup().align(Align.top);
+      RightSideUI = new VerticalGroup();
+
       RightSideUI.addActor(projectAdvancementWidget);
       RightSideUI.addActor(humanResourceWidget);
       RightSideUI.addActor(button1);
       RightSideUI.addActor(button2);
+
 
       humanResourceWidget.addListener(new ChangeListener() {
          @Override
@@ -113,10 +114,6 @@ public class UIStage extends Stage {
 
    public void resize (int width, int height){
       this.getViewport().update(width, height, true);
-      /*pos = new Vector3 (width,height,0);
-      getCamera().unproject(pos);
-      //RightSideUI.setPosition(pos.x-RightSideUI.getWidth()/2.0f,pos.y-RightSideUI.getHeight()/2.0f);
-      RightSideUI.setPosition(pos.x-(RightSideUI.getWidth()+RightSideUI.getPadRight()),pos.y);*/
    }
 
    public class MyChangeListener extends ChangeListener{

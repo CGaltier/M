@@ -22,12 +22,21 @@ import com.cgaltier.mgame.Utils.Global;
  * Created by Christian on 07/01/2016.
  */
 public class UIHumanResourceWidget extends Button {
-   private UIHumanResourceWidgetDetail cryoButton;
-   private UIHumanResourceWidgetDetail idleButton;
-   private UIHumanResourceWidgetDetail maintenanceButton;
-   private UIHumanResourceWidgetDetail productionButton;
-   private UIHumanResourceWidgetDetail missionButton;
-   private UIHumanResourceWidgetDetail emergencyButton;
+
+   private Image cryoImage;
+   private Image idleImage;
+   private Image maintenanceImage;
+   private Image productionImage;
+   private Image missionImage;
+   private Image emergencyImage;
+
+   private Label cryoLabel;
+   private Label idleLabel;
+   private Label maintenanceLabel;
+   private Label productionLabel;
+   private Label missionLabel;
+   private Label emergencyLabel;
+
    private UIHumanResourceWidgetStyle style;
 
 
@@ -35,34 +44,60 @@ public class UIHumanResourceWidget extends Button {
    public UIHumanResourceWidget(UIHumanResourceWidgetStyle style) {
       super(style);
       this.style = style;
-      createButtons();
+      createWidget();
+      setSize(getPrefWidth(), getPrefHeight());
    }
-   private void createButtons(){
-      cryoButton = new UIHumanResourceWidgetDetail(style, Global.strings.MOCKUP_NUMBER_DISPLAY, style.cryoDrawableHR,subButtontypeHR.cryo);
-      idleButton = new UIHumanResourceWidgetDetail(style,Global.strings.MOCKUP_NUMBER_DISPLAY,style.idleDrawableHR,subButtontypeHR.idle);
-      maintenanceButton = new UIHumanResourceWidgetDetail(style,Global.strings.MOCKUP_NUMBER_DISPLAY, style.maintenanceDrawableHR,subButtontypeHR.maintenance);
-      productionButton = new UIHumanResourceWidgetDetail(style,Global.strings.MOCKUP_NUMBER_DISPLAY, style.productionDrawableHR,subButtontypeHR.production);
-      missionButton = new UIHumanResourceWidgetDetail(style,Global.strings.MOCKUP_NUMBER_DISPLAY,style.missionDrawableHR,subButtontypeHR.mission);
-      emergencyButton = new UIHumanResourceWidgetDetail(style,Global.strings.MOCKUP_NUMBER_DISPLAY,style.emergencyDrawableHR ,subButtontypeHR.emergency);
-      this.add(idleButton);
-      this.add(cryoButton);
-      this.row();
-      this.add(productionButton);
-      this.add(maintenanceButton);
-      this.row();
-      this.add(emergencyButton);
-      this.add(missionButton);
+   private void createWidget(){
+      this.cryoImage = new Image(style.cryoDrawableHR);
+      this.idleImage = new Image(style.idleDrawableHR);
+      this.maintenanceImage = new Image (style.maintenanceDrawableHR);
+      this.productionImage = new Image(style.productionDrawableHR);
+      this.missionImage = new Image(style.missionDrawableHR);
+      this.emergencyImage = new Image(style.emergencyDrawableHR);
+
+      this.cryoImage.setScaling(Scaling.fit);
+      this.idleImage.setScaling(Scaling.fit);
+      this.maintenanceImage.setScaling(Scaling.fit);
+      this.productionImage.setScaling(Scaling.fit);
+      this.missionImage.setScaling(Scaling.fit);
+      this.emergencyImage.setScaling(Scaling.fit);
+
+      this.cryoLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
+      this.idleLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
+      this.maintenanceLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
+      this.productionLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
+      this.missionLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
+      this.emergencyLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
+
+      add(cryoImage);
+      add(cryoLabel).expandX();
+      add().fill();
+      add(idleImage);
+      add(idleLabel).expandX();
+      row();
+      add(maintenanceImage);
+      add(maintenanceLabel).expandX();
+       add().fill();
+       add(productionImage);
+      add(productionLabel).expandX();
+      row();
+       add(missionImage);
+      add(missionLabel).expandX();
+       add().fill();
+       add(emergencyImage);
+      add(emergencyLabel).expandX();
+   }
+
+
+   @Override
+   public void draw (Batch batch, float parentAlpha) {
+      super.draw(batch, parentAlpha);
    }
 
    public void clicked(){
       Dialog dialog = new Dialog("Human resources", new Window.WindowStyle (style.font, Color.WHITE,null));
       dialog.show(this.getStage());
    }
-
-   //-------
-   public enum subButtontypeHR {
-      none, cryo,idle,maintenance,production,mission, emergency;
-   };
 
    static public class UIHumanResourceWidgetStyle extends TextButtonStyle {
 
@@ -92,30 +127,5 @@ public class UIHumanResourceWidget extends Button {
          this.missionDrawableHR = new TextureRegionDrawable(missionRegion);
          this.emergencyDrawableHR = new TextureRegionDrawable(emergencyRegion);
       }
-   }
-
-
-   public class UIHumanResourceWidgetDetail extends Button{
-      subButtontypeHR typeHR;
-      Image image;
-      Label label;
-
-      public UIHumanResourceWidgetDetail(TextButtonStyle style, String text, Drawable drawable, subButtontypeHR typeHR) {
-         super(style);
-         setTouchable(Touchable.disabled);
-         this.typeHR = typeHR;
-         if (drawable != null) {
-            this.image = new Image(drawable);
-            image.setScaling(Scaling.fit);
-            add(image);
-         }
-         label = new Label (text, new Label.LabelStyle(style.font, style.fontColor));
-         add(label);
-		   setSize(getPrefWidth(), getPrefHeight());
-      }
-      @Override
-      public void draw (Batch batch, float parentAlpha) {
-		   super.draw(batch, parentAlpha);
-	   }
    }
 }
