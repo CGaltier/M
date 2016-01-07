@@ -1,6 +1,6 @@
 {
   com.badlogic.gdx.graphics.g2d.BitmapFont: {
-  normaltext: { file: SegoeUI25.fnt },
+  normaltext: { file: SegoeUI14.fnt },
   titletext: { file: SegoeWPBlack30.fnt },
 },
   com.badlogic.gdx.graphics.Color: {
@@ -16,10 +16,13 @@
   title-text: { font: titletext, fontColor: red },
 },
   com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-  default: { up: button, down: button_Pressed, checked: button_Pressed, disabled: button_Disabled },
+  default: { up: button_small, down: button_small_Pressed, checked: button_small_Pressed, disabled: button_small_Disabled },
   transparent: { },
 },
   com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-  default: { up: button, down: button_Pressed, checked: button_Pressed, disabled: button_Disabled, font: normaltext, fontColor: black },
+  default: { up: button_small, down: button_small_Pressed, checked: button_small_Pressed, disabled: button_small_Disabled, font: normaltext, fontColor: black },
+},
+  com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+  default: { selection: selection, background: textfield, font: normaltext, fontColor: white, cursor: cursor }
 },
 }

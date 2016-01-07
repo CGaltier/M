@@ -5,7 +5,7 @@ filter: Nearest,Nearest
 repeat: none
 button
   rotate: false
-  xy: 0, 0
+  xy: 1, 41
   size: 64, 64
   split: 5, 5, 6, 6
   orig: 64, 64
@@ -13,7 +13,7 @@ button
   index: -1
 button_Disabled
   rotate: false
-  xy: 66, 0
+  xy: 67, 41
   size: 64, 64
   split: 5, 5, 6, 6
   orig: 64, 64
@@ -21,9 +21,57 @@ button_Disabled
   index: -1
 button_Pressed
   rotate: false
-  xy: 132, 0
+  xy: 133, 41
   size: 64, 64
   split: 5, 5, 6, 6
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+button_small
+  rotate: false
+  xy: 1, 6
+  size: 33, 33
+  split: 3, 3, 3, 3
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+button_small_Disabled
+  rotate: false
+  xy: 199, 72
+  size: 33, 33
+  split: 3, 3, 3, 3
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+button_small_Pressed
+  rotate: false
+  xy: 36, 6
+  size: 33, 33
+  split: 3, 3, 3, 3
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+textfield
+  rotate: false
+  xy: 71, 6
+  size: 33, 33
+  split: 3, 3, 3, 3
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 1, 1
+  size: 3, 3
+  split: 0, 0, 0, 0
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+selection
+  rotate: false
+  xy: 199, 69
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
   offset: 0, 0
   index: -1

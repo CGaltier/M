@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cgaltier.mgame.Utils.Global;
 import com.cgaltier.mgame.MGame;
 import com.cgaltier.mgame.Stages.MapStage.TiledMapStage;
@@ -59,7 +60,7 @@ public class GameScreen extends AbstractMScreen {
       mapStage = new TiledMapStage(tiledMap, mapScale, game);
       mapStage.getViewport().setCamera(camera);
 
-      uiStage = new UIStage(this.game);
+      uiStage = new UIStage(game);
       //uiStage.setViewport(mapStage.getViewport());
 
 
@@ -73,7 +74,8 @@ public class GameScreen extends AbstractMScreen {
       camera.setToOrtho(false, Global.WORLD_HEIGHT * width / (float) height, Global.WORLD_HEIGHT);
       //camera.setToOrtho(false,width,height);
       camera.update();
-      uiStage.getViewport().setScreenSize(width, height);
+      uiStage.resize(width,height);
+
 
       //batch.setProjectionMatrix(camera.combined);
    }

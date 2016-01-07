@@ -1,17 +1,23 @@
 package com.cgaltier.mgame.Stages.UIStage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgaltier.mgame.MGame;
-import com.cgaltier.mgame.Stages.MapStage.AbstractStage;
+import com.cgaltier.mgame.UIElements.MyTextButton;
+import com.cgaltier.mgame.UIElements.UIHumanResourceWidget;
+import com.cgaltier.mgame.UIElements.UIHumanResourceWidget.UIHumanResourceWidgetStyle;
+import com.cgaltier.mgame.UIElements.UIProjectAdvancementWidget;
 import com.cgaltier.mgame.Utils.Global;
 
 /**
@@ -19,54 +25,103 @@ import com.cgaltier.mgame.Utils.Global;
  */
 public class UIStage extends Stage {
    public MGame game;
+   public Table mainTable;
+   private MyChangeListener buttonChangedListener;
+   public VerticalGroup RightSideUI;
+   public HorizontalGroup BottomBarUI;
 
+   private Vector3 pos;
    public UIStage(MGame game){
-      //this.getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-      float ratioWH = (float)Gdx.graphics.getWidth()/(float)Gdx.graphics.getHeight();
-      int width = (int)(1024.0*ratioWH);
-      this.getViewport().setScreenSize(width, Gdx.graphics.getHeight());
-      //getViewport().setWorldSize(1024.0f,768.0f);
+      super();
+      this.getViewport().update(Gdx.graphics.getHeight(), Gdx.graphics.getHeight(), true);
+      //this.getViewport().setScreenSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight());
       this.game = game ;
-      Table table = new Table();
-      this .addActor(table);
-
-      table.setFillParent(true);
-
-      TextButton button = new TextButton("Start Game", game.mAssets.getSkin());
-      TextButton button1 = new TextButton("Start Game", game.mAssets.getSkin());
-      TextButton button2 = new TextButton("Start Game", game.mAssets.getSkin());
-      TextButton button3 = new TextButton("Start Game", game.mAssets.getSkin());
-      TextButton button4 = new TextButton("Start Game", game.mAssets.getSkin());
-
-      table.defaults().fill();
-      table.add(button).colspan(3);
-      table.row();
-      table.add(button1);
-      table.add(button2).expand();
-      table.add(button3);
-      table.row();
-      table.add(button4).colspan(3);
-
-      button.addListener(new ChangeListener() {
-         @Override
-         public void changed(ChangeEvent event, Actor actor) {
-            Global.logger.info("button game changed");
-         }
-      });
-
-      button.addListener(new InputListener() {
-         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            Global.logger.info("button game touched");
-            return true;
-         }
-      });
-
-      table.debug();
 
 
-   };
+      mainTable= new Table();
+      this .addActor(mainTable);
+
+      mainTable.setFillParent(true);
+
+      mainTable.add().fill().expand();
+      createRightScreenUI();
+      createBottomScreenUI();
+
+      mainTable.add(RightSideUI).padRight(10.0f);//.align(Align.right).padTop(5).padRight(5).padBottom(5);
+      mainTable.row().padBottom(10.0f);
+      mainTable.add(BottomBarUI);
+
+      buttonChangedListener =new MyChangeListener();
+
+      mainTable.debug();
+      resize(getViewport().getScreenWidth(),getViewport().getScreenHeight());
+   }
+
+   private void createBottomScreenUI() {
+      MyTextButton button3= new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+      MyTextButton button4= new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+
+      button3.addListener(buttonChangedListener );
+      button4.addListener(buttonChangedListener );
+
+
+      BottomBarUI = new HorizontalGroup();
+      BottomBarUI.addActor(button3);
+      BottomBarUI.addActor(button4);
+   }
+
+   private void createRightScreenUI() {
+      UIHumanResourceWidgetStyle UIResourceStyle = new UIHumanResourceWidgetStyle(game.mAssets.getSkin().get(TextButtonStyle.class), game.mAssets.getHRCryoRegion(),
+      game.mAssets.getHRIdleRegion(),
+      game.mAssets.getHRMaintenanceRegion(),
+      game.mAssets.getHRProductionRegion(),
+      game.mAssets.getHRMissionRegion(),
+      game.mAssets.getHREmergencyRegion());
+
+      UIProjectAdvancementWidget projectAdvancementWidget = new UIProjectAdvancementWidget (game.mAssets.getSkin(),game.mAssets.getWormHoleAnimation());
+      UIHumanResourceWidget humanResourceWidget = new UIHumanResourceWidget(UIResourceStyle);
+      MyTextButton button1 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+      MyTextButton button2 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+
+
+      button1.addListener(buttonChangedListener);
+      button2.addListener(buttonChangedListener);
+
+
+      RightSideUI = new VerticalGroup().align(Align.top);
+      RightSideUI.addActor(projectAdvancementWidget);
+      RightSideUI.addActor(humanResourceWidget);
+      RightSideUI.addActor(button1);
+      RightSideUI.addActor(button2);
+
+
+
+   }
+
+
+
    public void resize (int width, int height){
-      this.getViewport().update(width, height,true);
+      this.getViewport().update(width, height, true);
+      /*pos = new Vector3 (width,height,0);
+      getCamera().unproject(pos);
+      //RightSideUI.setPosition(pos.x-RightSideUI.getWidth()/2.0f,pos.y-RightSideUI.getHeight()/2.0f);
+      RightSideUI.setPosition(pos.x-(RightSideUI.getWidth()+RightSideUI.getPadRight()),pos.y);*/
+   }
+
+   public class MyChangeListener extends ChangeListener{
+      public MyChangeListener (){
+         super();
+      }
+
+
+      public void changed(ChangeEvent event, Actor actor) {
+         Global.logger.info("button game changed");
+         if (actor instanceof MyTextButton){
+            ((MyTextButton)actor).setChecked(false);
+            ((MyTextButton)actor).clicked(true);
+         }
+      }
+
    }
 
 }
