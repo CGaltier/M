@@ -1,12 +1,16 @@
 package com.cgaltier.mgame.UIElements;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -48,7 +52,11 @@ public class UIHumanResourceWidget extends Button {
       this.row();
       this.add(emergencyButton);
       this.add(missionButton);
+   }
 
+   public void clicked(){
+      Dialog dialog = new Dialog("Human resources", new Window.WindowStyle (style.font, Color.WHITE,null));
+      dialog.show(this.getStage());
    }
 
    //-------
@@ -94,6 +102,7 @@ public class UIHumanResourceWidget extends Button {
 
       public UIHumanResourceWidgetDetail(TextButtonStyle style, String text, Drawable drawable, subButtontypeHR typeHR) {
          super(style);
+         setTouchable(Touchable.disabled);
          this.typeHR = typeHR;
          if (drawable != null) {
             this.image = new Image(drawable);

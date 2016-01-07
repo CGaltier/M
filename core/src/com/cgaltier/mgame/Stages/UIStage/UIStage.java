@@ -94,6 +94,17 @@ public class UIStage extends Stage {
       RightSideUI.addActor(button1);
       RightSideUI.addActor(button2);
 
+      humanResourceWidget.addListener(new ChangeListener() {
+         @Override
+         public void changed(ChangeEvent event, Actor actor) {
+            if (actor == null)
+               return;
+            Global.logger.info("HR button clicked");
+            if (actor instanceof UIHumanResourceWidget){
+            ((UIHumanResourceWidget)actor).clicked();
+            }
+         }
+      });
 
 
    }
@@ -115,6 +126,8 @@ public class UIStage extends Stage {
 
 
       public void changed(ChangeEvent event, Actor actor) {
+         if (actor == null)
+            return;
          Global.logger.info("button game changed");
          if (actor instanceof MyTextButton){
             ((MyTextButton)actor).setChecked(false);
