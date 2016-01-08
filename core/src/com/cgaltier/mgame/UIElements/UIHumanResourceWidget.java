@@ -3,14 +3,17 @@ package com.cgaltier.mgame.UIElements;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -45,7 +48,7 @@ public class UIHumanResourceWidget extends Button {
       super(style);
       this.style = style;
       createWidget();
-      setSize(getPrefWidth(), getPrefHeight());
+      //setSize(getPrefWidth(), getPrefHeight());
    }
    private void createWidget(){
       this.cryoImage = new Image(style.cryoDrawableHR);
@@ -69,33 +72,51 @@ public class UIHumanResourceWidget extends Button {
       this.missionLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
       this.emergencyLabel = new Label (Global.strings.MOCKUP_NUMBER_DISPLAY, new Label.LabelStyle(style.font, style.fontColor));
 
-      add(cryoImage);
-      add(cryoLabel).expandX();
-      add().fill();
-      add(idleImage);
-      add(idleLabel).expandX();
+
+      add(cryoImage).pad(2.0f, 2.0f, 2.0f, 5.0f);
+      add(cryoLabel).fillX().expandX();
+      add(idleImage).pad(2.0f, 5.0f, 2.0f, 2.0f);;
+      add(idleLabel).fillX().expandX();
       row();
-      add(maintenanceImage);
-      add(maintenanceLabel).expandX();
-       add().fill();
-       add(productionImage);
-      add(productionLabel).expandX();
+      add(maintenanceImage).pad(2.0f, 2.0f, 2.0f, 5.0f);;
+      add(maintenanceLabel).fillX().expandX();
+      add(productionImage).pad(2.0f, 5.0f, 2.0f, 2.0f);
+      add(productionLabel).fillX().expandX();
       row();
-       add(missionImage);
-      add(missionLabel).expandX();
-       add().fill();
-       add(emergencyImage);
-      add(emergencyLabel).expandX();
+      add(missionImage).pad(2.0f,2.0f,2.0f,5.0f);;
+      add(missionLabel).fillX().expandX();
+      add(emergencyImage).pad(2.0f, 5.0f, 2.0f, 2.0f);
+      add(emergencyLabel).fillX().expandX();
    }
 
+   private class MyDialog extends Dialog{
+      class MyCloseButtonListener extends ChangeListener{
+         Dialog dialog;
+         public MyCloseButtonListener (Dialog dialog){
+            super();
+            this.dialog=dialog;
+         }
+          @Override
+         public void changed(ChangeEvent event, Actor actor) {
+            dialog.hide();
+         }
+      }
+      public MyDialog(String title, WindowStyle windowStyle, TextButtonStyle style) {
+         super(title, windowStyle);
+         Button button =new TextButton("close", style);
+         add(button).fill();
+         MyCloseButtonListener listener = new MyCloseButtonListener(this);
+         button.addListener(listener);
 
+      }
+   }
    @Override
    public void draw (Batch batch, float parentAlpha) {
       super.draw(batch, parentAlpha);
    }
 
    public void clicked(){
-      Dialog dialog = new Dialog("Human resources", new Window.WindowStyle (style.font, Color.WHITE,null));
+      Dialog dialog = new MyDialog("Human resources", new Window.WindowStyle (style.font, Color.WHITE,null),style);
       dialog.show(this.getStage());
    }
 

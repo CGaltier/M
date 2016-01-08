@@ -46,7 +46,7 @@ public class UIStage extends Stage {
       createRightScreenUI();
       createBottomScreenUI();
 
-      mainTable.add(RightSideUI).padRight(10.0f);//.align(Align.right).padTop(5).padRight(5).padBottom(5);
+      mainTable.add(RightSideUI).padRight(10.0f).align(Align.top);//.align(Align.right).padTop(5).padRight(5).padBottom(5);
       mainTable.row().padBottom(10.0f);
       mainTable.add(BottomBarUI);
 
@@ -79,20 +79,20 @@ public class UIStage extends Stage {
 
       UIProjectAdvancementWidget projectAdvancementWidget = new UIProjectAdvancementWidget (game.mAssets.getSkin(),game.mAssets.getWormHoleAnimation());
       UIHumanResourceWidget humanResourceWidget = new UIHumanResourceWidget(UIResourceStyle);
-      MyTextButton button1 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+      /*MyTextButton button1 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
       MyTextButton button2 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
 
 
       button1.addListener(buttonChangedListener);
       button2.addListener(buttonChangedListener);
-
+*/
 
       RightSideUI = new VerticalGroup();
 
       RightSideUI.addActor(projectAdvancementWidget);
       RightSideUI.addActor(humanResourceWidget);
-      RightSideUI.addActor(button1);
-      RightSideUI.addActor(button2);
+      /*RightSideUI.addActor(button1);
+      RightSideUI.addActor(button2);*/
 
 
       humanResourceWidget.addListener(new ChangeListener() {
