@@ -1,22 +1,20 @@
 package com.cgaltier.mgame.Stages.UIStage;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.cgaltier.mgame.MGame;
 import com.cgaltier.mgame.UIElements.MyTextButton;
 import com.cgaltier.mgame.UIElements.UIHumanResourceWidget;
 import com.cgaltier.mgame.UIElements.UIHumanResourceWidget.UIHumanResourceWidgetStyle;
+import com.cgaltier.mgame.UIElements.UINaturalResourcesWidget;
+import com.cgaltier.mgame.UIElements.UINaturalResourcesWidget.UINaturalResourceWidgetStyle;
 import com.cgaltier.mgame.UIElements.UIProjectAdvancementWidget;
 import com.cgaltier.mgame.Utils.Global;
 
@@ -27,7 +25,7 @@ public class UIStage extends Stage {
    public MGame game;
    public Table mainTable;
    private MyChangeListener buttonChangedListener;
-   public VerticalGroup RightSideUI;
+   public Table RightSideUI;
    public HorizontalGroup BottomBarUI;
 
    private Vector3 pos;
@@ -70,29 +68,36 @@ public class UIStage extends Stage {
    }
 
    private void createRightScreenUI() {
-      UIHumanResourceWidgetStyle UIResourceStyle = new UIHumanResourceWidgetStyle(game.mAssets.getSkin().get(TextButtonStyle.class), game.mAssets.getHRCryoRegion(),
+
+      UIHumanResourceWidgetStyle UIHRResourceStyle = new UIHumanResourceWidgetStyle(game.mAssets.getSkin().get(TextButtonStyle.class), game.mAssets.getHRCryoRegion(),
       game.mAssets.getHRIdleRegion(),
       game.mAssets.getHRMaintenanceRegion(),
       game.mAssets.getHRProductionRegion(),
       game.mAssets.getHRMissionRegion(),
       game.mAssets.getHREmergencyRegion());
 
+      UINaturalResourceWidgetStyle UINRResourceStyle = new UINaturalResourceWidgetStyle(game.mAssets.getSkin().get(TextButtonStyle.class),
+      game.mAssets.getNRNitrogenRegion(),
+      game.mAssets.getNROxygenRegion(),
+      game.mAssets.getNRHydrogenRegion(),
+      game.mAssets.getNRGoldRegion(),
+      game.mAssets.getNRAluminiumRegion(),
+      game.mAssets.getNRTitaniumRegion(),
+      game.mAssets.getNRSiliconRegion(),
+      game.mAssets.getNRRareElementsRegion(),
+      game.mAssets.getNRCarbonRegion());
+
       UIProjectAdvancementWidget projectAdvancementWidget = new UIProjectAdvancementWidget (game.mAssets.getSkin(),game.mAssets.getWormHoleAnimation());
-      UIHumanResourceWidget humanResourceWidget = new UIHumanResourceWidget(UIResourceStyle);
-      /*MyTextButton button1 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
-      MyTextButton button2 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+      UIHumanResourceWidget humanResourceWidget = new UIHumanResourceWidget(UIHRResourceStyle);
+      UINaturalResourcesWidget naturalResourcesWidget = new UINaturalResourcesWidget(UINRResourceStyle);
 
+      RightSideUI = new Table();
 
-      button1.addListener(buttonChangedListener);
-      button2.addListener(buttonChangedListener);
-*/
-
-      RightSideUI = new VerticalGroup();
-
-      RightSideUI.addActor(projectAdvancementWidget);
-      RightSideUI.addActor(humanResourceWidget);
-      /*RightSideUI.addActor(button1);
-      RightSideUI.addActor(button2);*/
+      RightSideUI.add(projectAdvancementWidget);
+      RightSideUI.row();
+      RightSideUI.add(humanResourceWidget).expandX();
+      RightSideUI.row();
+      RightSideUI.add(naturalResourcesWidget).expandX();
 
 
       humanResourceWidget.addListener(new ChangeListener() {
@@ -101,12 +106,24 @@ public class UIStage extends Stage {
             if (actor == null)
                return;
             Global.logger.info("HR button clicked");
-            if (actor instanceof UIHumanResourceWidget){
-            ((UIHumanResourceWidget)actor).clicked();
+            if (actor instanceof UIHumanResourceWidget) {
+               ((UIHumanResourceWidget) actor).clicked();
             }
          }
       });
 
+
+      naturalResourcesWidget.addListener(new ChangeListener() {
+         @Override
+         public void changed(ChangeEvent event, Actor actor) {
+            if (actor == null)
+               return;
+            Global.logger.info("NR button clicked");
+            if (actor instanceof UINaturalResourcesWidget) {
+               ((UINaturalResourcesWidget) actor).clicked();
+            }
+         }
+      });
 
    }
 

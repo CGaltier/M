@@ -35,7 +35,6 @@ public class MAssets implements Disposable{
    public void loadAssets(){
       assetManager.load(Global.SKIN_ASSET,Skin.class);
       assetManager.load(Global.PLIC_SOUND,Sound.class);
-      //assetManager.load(Global.WORMHOLE_IMG,Texture.class);
       assetManager.load(Global.WORMHOLE_ANIM_ATLAS,TextureAtlas.class);
       assetManager.load(Global.UI_IMAGES_ATLAS,TextureAtlas.class);
 
@@ -123,6 +122,96 @@ public class MAssets implements Disposable{
       for (AtlasRegion region:UIImagesRegions)
       {
          if (region.name.compareTo(Global.HR_EMERGENCY_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRNitrogenRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_NITROGEN_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNROxygenRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_OXYGEN_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRHydrogenRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_HYDROGEN_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRGoldRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_GOLD_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRAluminiumRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_ALUMINIUM_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRTitaniumRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_TITANIUM_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRSiliconRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_SILICON_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRRareElementsRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_RARE_ELEMENTS_IMAGE)==0)
+            return region;
+      }
+
+      return null;
+   }
+
+   public AtlasRegion getNRCarbonRegion() {
+      for (AtlasRegion region:UIImagesRegions)
+      {
+         if (region.name.compareTo(Global.NR_CARBON_IMAGE)==0)
             return region;
       }
 

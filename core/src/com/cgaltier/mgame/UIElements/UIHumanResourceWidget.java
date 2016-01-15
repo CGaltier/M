@@ -77,16 +77,18 @@ public class UIHumanResourceWidget extends Button {
       add(cryoLabel).fillX().expandX();
       add(idleImage).pad(2.0f, 5.0f, 2.0f, 2.0f);;
       add(idleLabel).fillX().expandX();
-      row();
       add(maintenanceImage).pad(2.0f, 2.0f, 2.0f, 5.0f);;
       add(maintenanceLabel).fillX().expandX();
+      row();
       add(productionImage).pad(2.0f, 5.0f, 2.0f, 2.0f);
       add(productionLabel).fillX().expandX();
-      row();
       add(missionImage).pad(2.0f,2.0f,2.0f,5.0f);;
       add(missionLabel).fillX().expandX();
       add(emergencyImage).pad(2.0f, 5.0f, 2.0f, 2.0f);
       add(emergencyLabel).fillX().expandX();
+
+      //setSize(getPrefWidth(),getPrefHeight());
+
    }
 
    private class MyDialog extends Dialog{

@@ -19,6 +19,18 @@ public class Global {
    public static final String HR_MISSION_IMAGE = "mission";
    public static final String HR_EMERGENCY_IMAGE = "emergency";
    public static final String UI_IMAGES_ATLAS = "UIImages.atlas";
+   public static final String NR_NITROGEN_IMAGE = "nitrogen";
+   public static final String NR_OXYGEN_IMAGE = "oxygen";
+   public static final String NR_HYDROGEN_IMAGE="hydrogen";
+   public static final String NR_GOLD_IMAGE = "gold";
+   public static final String NR_ALUMINIUM_IMAGE = "aluminium";
+   public static final String NR_TITANIUM_IMAGE = "titanium";
+   public static final String NR_SILICON_IMAGE = "silicon";
+   public static final String NR_RARE_ELEMENTS_IMAGE = "rare_elements";
+   public static final String NR_CARBON_IMAGE = "carbon";
+   public static final float PRODUCTION_DELTATIME = 1.0f;//1 second
+
+
    public static Global instance=null;
    public static Logger logger;
    public static final float WORLD_HEIGHT = 60.0f;//world is 60 whatever (let's say km) tall.
@@ -26,6 +38,7 @@ public class Global {
    public static final String PLIC_SOUND="plic.mp3";
    public static final String WORMHOLE_ANIM_ATLAS="wormhole_anim.atlas";
    public static final UIStrings strings = new UIStrings();
+
 
    private Global (){
       instance =this;

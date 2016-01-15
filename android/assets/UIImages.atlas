@@ -3,44 +3,107 @@ UIImages.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+aluminium
+  rotate: false
+  xy: 1, 91
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+carbon
+  rotate: false
+  xy: 1, 73
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 cryo
   rotate: false
-  xy: 1, 1
+  xy: 19, 91
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 emergency
   rotate: false
-  xy: 19, 1
+  xy: 1, 55
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+gold
+  rotate: false
+  xy: 19, 73
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+hydrogen
+  rotate: false
+  xy: 37, 91
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 idle
   rotate: false
-  xy: 37, 1
+  xy: 1, 37
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 maintenance
   rotate: false
-  xy: 55, 1
+  xy: 19, 55
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 mission
   rotate: false
-  xy: 73, 1
+  xy: 37, 73
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+nitrogen
+  rotate: false
+  xy: 1, 19
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+oxygen
+  rotate: false
+  xy: 19, 37
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 production
   rotate: false
-  xy: 91, 1
+  xy: 37, 55
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+rare_elements
+  rotate: false
+  xy: 1, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+silicon
+  rotate: false
+  xy: 19, 19
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+titanium
+  rotate: false
+  xy: 37, 37
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

@@ -99,7 +99,7 @@ public class GameScreen extends AbstractMScreen {
 
       tiledMapRenderer.render();
       uiStage.draw();
-
+      game.gameWorld.update(delta);
    }
 
    @Override
