@@ -1,83 +1,62 @@
 package com.cgaltier.mgame;
+import com.cgaltier.mgame.GoodType;
 
-import com.cgaltier.mgame.Utils.Global;
+public enum Good {
+   //bulk extracted by mining modules, bulk processed into Gas and minerals
+   Bulk ("Bulk",GoodType.BULK),
+   Gas ("Gas",GoodType.BULK),
+   Minerals ("Minerals", GoodType.BULK),
+   //Gas produced by processing Gas bulk
+   Nitrogen("Nitrogen",GoodType.NATURAL),
+   Oxygen("Nitrogen",GoodType.NATURAL),
+   Hydrogen ("Hydrogen",GoodType.NATURAL),
+   //Minerals produced by processing mineral bulk
+   Gold ("Hydrogen",GoodType.NATURAL),
+   Aluminium ("Aluminium",GoodType.NATURAL),
+   Titanium ("Titanium",GoodType.NATURAL),
+   Silicon ("Silicon",GoodType.NATURAL),
+   Carbon("Carbon",GoodType.NATURAL),
+   Rare_Elements("Rare elements",GoodType.NATURAL),
+   //Base module produced
+   Base_module("Base module", GoodType.PRODUCED),
+   //Specialised modules by transforming base module
+   Life_module("Life module", GoodType.PRODUCED),
+   Production_module("Production module", GoodType.PRODUCED),
+   Jump_point_module("Jump point module", GoodType.PRODUCED),
+   //advanced materials
+   Electronics("Electronics", GoodType.PRODUCED),
+   Graphen("Graphen", GoodType.PRODUCED),
+   //Life sustainability
+   Food("Food", GoodType.PRODUCED),
+   Air("Air", GoodType.PRODUCED),
+   Water("Water", GoodType.PRODUCED),
+   BioWaste("Biowaste",GoodType.PRODUCED),
+   CarbonDioxyde("CarbonDioxyde",GoodType.PRODUCED),
+   //Energy
+   Energy("Energy",GoodType.ENERGY);
 
 
-/**
- * Created by Christian on 15/01/2016.
- */
-public class Good {
-   public enum eNaturalResource {NITROGEN, OXYGEN, HYDROGEN, GOLD, ALUMINIUM, TITANIUM, SILICON, RARE_ELEMENTS, CARBON }
-   public enum eProducedGood {FOOD, LIFE_MODULE, PRODUCTION_MODULE, ELECTRONICS, GRAPHEN, AIR, WATER, JUMP_POINT_MODULE}
-   public enum eEnergy {ENERGY}
-   public String name;
-   public int stock;
 
 
-   public Good (String name){
-      this.name = name;
-      stock=0;
+
+   public final String name;
+   public final GoodType type;
+   int bit;
+
+   Good(String name, GoodType type){
+      this.name=name;
+      this.type=type;
+      bit = 1<<this.ordinal();
    }
-   public int getStock(){return stock;}
-   public void setStock(int value) {stock=value;}
-   public String getName(){return name;}
-   public void addValue (int value){stock+=value;}
-   public void removeValue(int value) {
-      stock-=value;
-      if (stock <0){
-         Global.logger.info(name+" : OOPS ! Negative stock here !");
-         setStock(0);
+   public boolean isInSet(int flag){
+      return (flag & this.bit)== this.bit;
+   }
+   public static int getFlag(Good... types){
+      int result = 0;
+      for (Good good:types){
+         result |= good.bit;
       }
+      return result;
    }
-   public static String Name(eEnergy type){
-      switch (type){
-         case ENERGY:
-            return "Energy";
-      }
-      return "unknown";
-   }
-   public static String Name(eProducedGood type){
-      switch (type){
-         case FOOD:
-            return "Food";
-         case LIFE_MODULE :
-            return "Life module";
-         case PRODUCTION_MODULE :
-            return "Production module";
-         case ELECTRONICS :
-            return "Electronics";
-         case GRAPHEN :
-            return "Graphen";
-         case AIR :
-            return "Air";
-         case WATER :
-            return "Water";
-         case JUMP_POINT_MODULE :
-            return "Jump point module";
-      }
-      return "unknown";
-   }
-   public static String Name(eNaturalResource type) {
-      switch (type){
-         case NITROGEN :
-            return "Nitrogen";
-         case OXYGEN :
-            return "Oxygen";
-         case HYDROGEN :
-            return "Hydrogen";
-         case GOLD :
-            return "Gold";
-         case ALUMINIUM :
-            return "Aluminium";
-         case TITANIUM :
-            return "Titanium";
-         case SILICON :
-            return "Silicon";
-         case RARE_ELEMENTS :
-            return "Rare Elements";
-         case CARBON :
-            return "Carbon";
-      }
-      return "unknown";
-   }
-}
+
+};

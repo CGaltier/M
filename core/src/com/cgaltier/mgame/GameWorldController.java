@@ -11,6 +11,23 @@ public class GameWorldController {
    }
 
    public void update(float delta) {
-      gameWorldData.update(this,delta);
+      gameWorldData.update(this, delta);
+   }
+
+   public long getTimePlayedMs() {
+      return gameWorldData.timePlayed;
+   }
+   public void pauseGame(){
+      gameWorldData.pause(true);
+   }
+   public void restartGame(){
+      gameWorldData.pause(false);
+   }
+
+   public final HumanResources getHumanResources() {
+      return gameWorldData.humanResources;
+   }
+   public final Resources getResources(){
+      return gameWorldData.resources;
    }
 }

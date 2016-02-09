@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.cgaltier.mgame.HumanResources;
+import com.cgaltier.mgame.MGame;
 import com.cgaltier.mgame.Utils.Global;
 
 
@@ -42,13 +47,16 @@ public class UIHumanResourceWidget extends Button {
 
    private UIHumanResourceWidgetStyle style;
 
+   private MGame game;
 
 
-   public UIHumanResourceWidget(UIHumanResourceWidgetStyle style) {
+   public UIHumanResourceWidget(MGame game, UIHumanResourceWidgetStyle style) {
       super(style);
+      this.game = game;
+      clearChildren();
       this.style = style;
       createWidget();
-      //setSize(getPrefWidth(), getPrefHeight());
+      setSize(getPrefWidth(), getPrefHeight());
    }
    private void createWidget(){
       this.cryoImage = new Image(style.cryoDrawableHR);
@@ -90,6 +98,15 @@ public class UIHumanResourceWidget extends Button {
       //setSize(getPrefWidth(),getPrefHeight());
 
    }
+   public void setValues (final HumanResources resources){
+      cryoLabel.setText(String.valueOf(resources.getCryo()));
+      idleLabel.setText(String.valueOf(resources.getIdle()));
+      maintenanceLabel.setText(String.valueOf(resources.getMaintenance()));
+      productionLabel.setText(String.valueOf(resources.getProduction()));
+      missionLabel.setText(String.valueOf(resources.getMission()));
+      emergencyLabel.setText(String.valueOf(resources.getEmergency()));
+      invalidate();
+   }
 
    private class MyDialog extends Dialog{
       class MyCloseButtonListener extends ChangeListener{
@@ -118,7 +135,7 @@ public class UIHumanResourceWidget extends Button {
    }
 
    public void clicked(){
-      Dialog dialog = new MyDialog("Human resources", new Window.WindowStyle (style.font, Color.WHITE,null),style);
+      Dialog dialog = new MyDialog("Human resources", game.mAssets.getSkinAdvanced().get(Window.WindowStyle.class) /*new Window.WindowStyle (style.font, Color.WHITE,null)*/,style);
       dialog.show(this.getStage());
    }
 

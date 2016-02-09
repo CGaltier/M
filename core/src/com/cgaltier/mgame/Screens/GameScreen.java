@@ -9,14 +9,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cgaltier.mgame.Utils.Global;
 import com.cgaltier.mgame.MGame;
 import com.cgaltier.mgame.Stages.MapStage.TiledMapStage;
@@ -31,18 +24,15 @@ public class GameScreen extends AbstractMScreen {
    ResolutionFileResolver fileResolver;
    OrthographicCamera camera;
 
-   TiledMap tiledMap;
-   TiledMapRenderer tiledMapRenderer ;
-
    TiledMapStage mapStage;
    UIStage uiStage;
    InputMultiplexer inputMultiplexer;
 
-   public float mapScale;
 
 
    public GameScreen(MGame game){
       super(game);
+
 
       inputMultiplexer = new InputMultiplexer();
 
@@ -50,41 +40,55 @@ public class GameScreen extends AbstractMScreen {
       fileResolver = new ResolutionFileResolver(new InternalFileHandleResolver(), Global.resolutionList[0],Global.resolutionList[1],Global.resolutionList[2]);
 
       camera = new OrthographicCamera();
-      tiledMap = new TmxMapLoader().load("asteroid.tmx");
 
-      mapScale = 10.0f/Global.WORLD_HEIGHT;
-      tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,mapScale );
-
-
-
-      mapStage = new TiledMapStage(tiledMap, mapScale, game);
+      mapStage = new TiledMapStage(game);
       mapStage.getViewport().setCamera(camera);
 
       uiStage = new UIStage(game);
-      //uiStage.setViewport(mapStage.getViewport());
 
+      uiStage.setViewport(new FitViewport(1024,768));
+      uiStage.getViewport().update(1024, 768, true);
 
+      inputMultiplexer.addProcessor(this);
       inputMultiplexer.addProcessor(uiStage);
       inputMultiplexer.addProcessor(mapStage);
       //mapStage.setMapScale(mapScale);
-
+      pause();
    }
    @Override
    public void resize(int width, int height) {
       camera.setToOrtho(false, Global.WORLD_HEIGHT * width / (float) height, Global.WORLD_HEIGHT);
       //camera.setToOrtho(false,width,height);
       camera.update();
-      uiStage.resize(width,height);
-
+      uiStage.resize(width, height);
 
       //batch.setProjectionMatrix(camera.combined);
+   }
+   private void showMenuScreen() {
+      game.gameWorld.gameWorldController.pauseGame();
+      game.setMainMenuScreen();
+   }
+   private void showTestScreen() {
+      game.gameWorld.gameWorldController.pauseGame();
+      game.setTestScreen();
    }
 
    @Override
    public void show() {
       Gdx.input.setInputProcessor(inputMultiplexer);
+      game.gameWorld.gameWorldController.restartGame();
 
    }
+   @Override
+   public void resume(){
+      game.gameWorld.gameWorldController.restartGame();
+   }
+   @Override
+   public void pause(){
+      super.pause();
+      game.gameWorld.gameWorldController.pauseGame();
+   }
+
 
    @Override
    public void render (float delta) {
@@ -94,20 +98,64 @@ public class GameScreen extends AbstractMScreen {
       uiStage.act(delta);
       mapStage.act(delta);
 
-      //tiledMapRenderer.setView(camera);
-      tiledMapRenderer.setView(camera);
+      uiStage.updateUI();
 
-      tiledMapRenderer.render();
+      mapStage.draw(camera);
       uiStage.draw();
       game.gameWorld.update(delta);
    }
 
    @Override
    public void dispose(){
-      tiledMap.dispose();
+
       mapStage.dispose();
       uiStage.dispose();
    }
 
 
+   @Override
+   public boolean keyDown(int keycode) {
+      return false;
+   }
+
+   @Override
+   public boolean keyUp(int keyCode){
+      if(keyCode == Input.Keys.ESCAPE){
+         showMenuScreen();
+         return true;}
+      if(keyCode == Input.Keys.F12){
+         showTestScreen();
+         return true;}
+      return false;
+   }
+
+   @Override
+   public boolean keyTyped(char character) {
+      return false;
+   }
+
+   @Override
+   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+      return false;
+   }
+
+   @Override
+   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+      return false;
+   }
+
+   @Override
+   public boolean touchDragged(int screenX, int screenY, int pointer) {
+      return false;
+   }
+
+   @Override
+   public boolean mouseMoved(int screenX, int screenY) {
+      return false;
+   }
+
+   @Override
+   public boolean scrolled(int amount) {
+      return false;
+   }
 }

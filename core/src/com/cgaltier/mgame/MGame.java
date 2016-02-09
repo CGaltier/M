@@ -4,12 +4,15 @@ package com.cgaltier.mgame;
 import com.badlogic.gdx.Game;
 import com.cgaltier.mgame.Screens.GameScreen;
 import com.cgaltier.mgame.Screens.MainMenuScreen;
+import com.cgaltier.mgame.Screens.TestScreen;
+
 public class MGame extends Game {//InputAdapter implements ApplicationListener {
 
 
    public MAssets mAssets;
    public GameScreen gameScreen;
    public MainMenuScreen mainMenuScreen;
+   public TestScreen testScreen;
    public GameWorld gameWorld;
 
    @Override
@@ -17,9 +20,11 @@ public class MGame extends Game {//InputAdapter implements ApplicationListener {
       mAssets = new MAssets();
       mAssets.loadAssets();
       gameWorld = new GameWorld();
-      gameScreen = new com.cgaltier.mgame.Screens.GameScreen(this);
-      mainMenuScreen = new com.cgaltier.mgame.Screens.MainMenuScreen(this);
+      gameScreen = new GameScreen(this);
+      mainMenuScreen = new MainMenuScreen(this);
+      testScreen= new TestScreen(this);
       setScreen(mainMenuScreen);
+      //setScreen(testScreen);
 
    }
    @Override
@@ -30,4 +35,13 @@ public class MGame extends Game {//InputAdapter implements ApplicationListener {
    }
 
 
+   public void setGameScreen() {
+      this.setScreen(gameScreen);
+   }
+   public void setMainMenuScreen(){
+      this.setScreen(mainMenuScreen);
+   }
+   public void setTestScreen(){
+      this.setScreen(testScreen);
+   }
 }

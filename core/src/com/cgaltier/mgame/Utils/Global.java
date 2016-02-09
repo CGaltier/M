@@ -35,6 +35,7 @@ public class Global {
    public static Logger logger;
    public static final float WORLD_HEIGHT = 60.0f;//world is 60 whatever (let's say km) tall.
    public static final String SKIN_ASSET="skin.json";
+   public static final String SKIN_ASSET_ADVANCED="advancedUI.json";
    public static final String PLIC_SOUND="plic.mp3";
    public static final String WORMHOLE_ANIM_ATLAS="wormhole_anim.atlas";
    public static final UIStrings strings = new UIStrings();

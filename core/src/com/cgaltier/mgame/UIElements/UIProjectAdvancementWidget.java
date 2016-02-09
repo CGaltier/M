@@ -72,6 +72,18 @@ public class UIProjectAdvancementWidget extends Button {
    public void draw (Batch batch, float parentAlpha) {
       super.draw(batch, parentAlpha);
    }
+   public void setTimePlayedMs (long timePlayedMs){
+      long timePlayed = timePlayedMs /1000;
+      long days = Math.floorDiv (timePlayed,(long)(60*60*24));
+      long hours = Math.floorDiv(timePlayed-(days*60*60*24), (long) (60 * 60));
+      long minutes = Math.floorDiv(timePlayed-(days*60*60*24)-(hours*60*60), (long) (60));
+      long seconds = timePlayed-(days*60*60*24)-(hours*60*60)-(minutes*60);
+      String text="";
+      if (days!=0)
+         text=days+":";
+      text+=hours+":"+minutes+":"+seconds;
+      textTime.setText(text);
+   }
    public void setStyle (TextButtonStyle style) {
       super.setStyle(style);
 
@@ -92,8 +104,6 @@ public class UIProjectAdvancementWidget extends Button {
    public void act (float delta){
       super.act(delta);
       updateDrawable(delta);
-
-
    }
    private void updateDrawable (float delta) {
       lastdelta+=delta;

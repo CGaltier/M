@@ -1,6 +1,7 @@
 package com.cgaltier.mgame;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,7 +34,10 @@ public class MAssets implements Disposable{
       return thisInstance;
    }
    public void loadAssets(){
+
       assetManager.load(Global.SKIN_ASSET,Skin.class);
+      assetManager.load(Global.SKIN_ASSET_ADVANCED,Skin.class);
+
       assetManager.load(Global.PLIC_SOUND,Sound.class);
       assetManager.load(Global.WORMHOLE_ANIM_ATLAS,TextureAtlas.class);
       assetManager.load(Global.UI_IMAGES_ATLAS,TextureAtlas.class);
@@ -59,6 +63,9 @@ public class MAssets implements Disposable{
       return assetManager.get(Global.SKIN_ASSET,Skin.class);
    }
 
+   public Skin getSkinAdvanced(){
+      return assetManager.get(Global.SKIN_ASSET_ADVANCED,Skin.class);
+   }
    public Sound getPlicSound () {return assetManager.get(Global.PLIC_SOUND,Sound.class);}
 
    public Animation getWormHoleAnimation() {

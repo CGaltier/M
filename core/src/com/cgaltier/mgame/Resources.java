@@ -1,70 +1,47 @@
 package com.cgaltier.mgame;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.Iterator;
 
 /**
  * Created by Christian on 13/01/2016.
  */
 public class Resources {
-   public HashMap<String, Good> resources;
+   public HashMap<String, GoodStock> resources;
 
-   public void NaturalResources(){
-      resources = new HashMap<String, Good>();
-      for (Good.eNaturalResource value: Good.eNaturalResource.values())
+   public Resources(){
+      resources = new HashMap<String, GoodStock>();
+      for (Good value: Good.values())
       {
-         resources.put(Good.Name(value), new Good(Good.Name(value)));
+         resources.put(value.name, new GoodStock(value));
       }
-      for (Good.eProducedGood value: Good.eProducedGood.values())
-      {
-         resources.put(Good.Name(value), new Good(Good.Name(value)));
+   }
+
+
+   public int getStock(Good good){
+      resources.get(good.name).getStock();
+      return 0;
+   }
+
+   public void setStock(Good good, int value){
+      resources.get(good.name).setStock(value);
+   }
+
+   public void add(Good good, int value){
+      resources.get(good.name).addValue(value);
+   }
+
+   public void remove(Good good, int value){
+      resources.get(good.name).removeValue(value);
+   }
+
+   public void add(Resources turnProduction) {
+      Iterator iterator = turnProduction.resources.entrySet().iterator();
+      while (iterator.hasNext()){
+         HashMap.Entry entry = (HashMap.Entry )(iterator.next());
+         if (entry !=null)
+            add(((GoodStock)entry.getValue()).good,((GoodStock)entry.getValue()).getStock());
       }
-      resources.put(Good.Name(Good.eEnergy.ENERGY), new Good(Good.Name(Good.eEnergy.ENERGY)));
    }
 
-
-   public int getStock(Good.eEnergy resource){
-      resources.get(Good.Name(resource)).getStock();
-      return 0;
-   }
-   public int getStock(Good.eNaturalResource resource){
-      resources.get(Good.Name(resource)).getStock();
-      return 0;
-   }
-   public int getStock(Good.eProducedGood resource){
-      resources.get(Good.Name(resource)).getStock();
-      return 0;
-   }
-
-   public void setStock(Good.eEnergy resource, int value){
-      resources.get(Good.Name(resource)).setStock(value);
-   }
-   public void setStock(Good.eNaturalResource resource, int value){
-      resources.get(Good.Name(resource)).setStock(value);
-   }
-   public void setStock(Good.eProducedGood resource, int value){
-      resources.get(Good.Name(resource)).setStock(value);
-   }
-
-   public void add(Good.eEnergy resource, int value){
-      resources.get(Good.Name(resource)).addValue(value);
-   }
-   public void add(Good.eNaturalResource resource, int value){
-      resources.get(Good.Name(resource)).addValue(value);
-   }
-   public void add(Good.eProducedGood resource, int value){
-      resources.get(Good.Name(resource)).addValue(value);
-   }
-
-   public void remove(Good.eEnergy resource, int value){
-      resources.get(Good.Name(resource)).removeValue(value);
-   }
-   public void remove(Good.eProducedGood resource, int value){
-      resources.get(Good.Name(resource)).removeValue(value);
-   }
-   public void remove(Good.eNaturalResource resource, int value){
-      resources.get(Good.Name(resource)).removeValue(value);
-   }
 }

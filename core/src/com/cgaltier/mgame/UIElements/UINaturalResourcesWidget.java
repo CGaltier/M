@@ -15,6 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.cgaltier.mgame.Good;
+import com.cgaltier.mgame.MGame;
+import com.cgaltier.mgame.Resources;
 import com.cgaltier.mgame.Utils.Global;
 
 
@@ -23,6 +26,7 @@ import com.cgaltier.mgame.Utils.Global;
  */
 public class UINaturalResourcesWidget extends Button {
 
+   private MGame game;
    //NITROGEN, OXYGEN, HYDROGEN, GOLD, ALUMINIUM, TITANIUM, SILICON, RARE_ELEMENTS, CARBON;
    private Image nitrogenImage;
    private Image oxygenImage;
@@ -48,10 +52,11 @@ public class UINaturalResourcesWidget extends Button {
 
 
 
-   public UINaturalResourcesWidget(UINaturalResourceWidgetStyle style) {
+   public UINaturalResourcesWidget(MGame game, UINaturalResourceWidgetStyle style) {
       super(style);
       this.style = style;
       createWidget();
+      this.game = game;
       //setSize(getPrefWidth(), getPrefHeight());
    }
    private void createWidget(){
@@ -144,8 +149,20 @@ public class UINaturalResourcesWidget extends Button {
    }
 
    public void clicked(){
-      Dialog dialog = new MyDialog("Natural resources", new Window.WindowStyle (style.font, Color.WHITE,null),style);
+      Dialog dialog = new MyDialog("Natural resources", game.mAssets.getSkinAdvanced().get(Window.WindowStyle.class)/*new Window.WindowStyle (style.font, Color.WHITE,null)*/,style);
       dialog.show(this.getStage());
+   }
+   public void setValues (final Resources resources){
+      nitrogenLabel.setText(String.valueOf(resources.getStock(Good.Nitrogen)));
+      oxygenLabel.setText(String.valueOf(resources.getStock(Good.Oxygen)));
+      hydrogenLabel.setText(String.valueOf(resources.getStock(Good.Hydrogen)));
+      goldLabel.setText(String.valueOf(resources.getStock(Good.Gold)));
+      aluminiumLabel.setText(String.valueOf(resources.getStock(Good.Aluminium)));
+      titaniumLabel.setText(String.valueOf(resources.getStock(Good.Titanium)));
+      siliconLabel.setText(String.valueOf(resources.getStock(Good.Silicon)));
+      carbonLabel.setText(String.valueOf(resources.getStock(Good.Carbon)));
+      rareElementsLabel.setText(String.valueOf(resources.getStock(Good.Rare_Elements)));
+      invalidate();
    }
 
    static public class UINaturalResourceWidgetStyle extends TextButtonStyle {

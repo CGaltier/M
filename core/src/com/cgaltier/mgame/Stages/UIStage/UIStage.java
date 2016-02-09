@@ -23,48 +23,44 @@ import com.cgaltier.mgame.Utils.Global;
  */
 public class UIStage extends Stage {
    public MGame game;
-   public Table mainTable;
+
+   private final float ratio = 1024.0f / 720.0f;
    private MyChangeListener buttonChangedListener;
    public Table RightSideUI;
-   public HorizontalGroup BottomBarUI;
+   public Table BottomBarUI;
+   private UIProjectAdvancementWidget projectAdvancementWidget;
+   private UIHumanResourceWidget humanResourceWidget;
+   private UINaturalResourcesWidget naturalResourcesWidget;
 
    private Vector3 pos;
-   public UIStage(MGame game){
+
+   public UIStage(MGame game) {
       super();
-      this.getViewport().update(Gdx.graphics.getHeight(), Gdx.graphics.getHeight(), true);
-      this.game = game ;
+
+      this.game = game;
 
 
-      mainTable= new Table();
-      this .addActor(mainTable);
-
-      mainTable.setFillParent(true);
-
-      mainTable.add().fill().expand();
       createRightScreenUI();
       createBottomScreenUI();
 
-      mainTable.add(RightSideUI).padRight(10.0f).align(Align.top);//.align(Align.right).padTop(5).padRight(5).padBottom(5);
-      mainTable.row().padBottom(10.0f);
-      mainTable.add(BottomBarUI);
+      buttonChangedListener = new MyChangeListener();
 
-      buttonChangedListener =new MyChangeListener();
 
-      mainTable.debug();
-      resize(getViewport().getScreenWidth(),getViewport().getScreenHeight());
+      resize(getViewport().getScreenWidth(), getViewport().getScreenHeight());
    }
 
    private void createBottomScreenUI() {
-      MyTextButton button3= new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
-      MyTextButton button4= new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+      MyTextButton button3 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
+      MyTextButton button4 = new MyTextButton("Start Game", game.mAssets.getSkin(), game.mAssets.getPlicSound());
 
-      button3.addListener(buttonChangedListener );
-      button4.addListener(buttonChangedListener );
+      button3.addListener(buttonChangedListener);
+      button4.addListener(buttonChangedListener);
 
 
-      BottomBarUI = new HorizontalGroup();
+      BottomBarUI = new Table();
       BottomBarUI.addActor(button3);
       BottomBarUI.addActor(button4);
+      this.addActor(BottomBarUI);
    }
 
    private void createRightScreenUI() {
@@ -87,17 +83,21 @@ public class UIStage extends Stage {
       game.mAssets.getNRRareElementsRegion(),
       game.mAssets.getNRCarbonRegion());
 
-      UIProjectAdvancementWidget projectAdvancementWidget = new UIProjectAdvancementWidget (game.mAssets.getSkin(),game.mAssets.getWormHoleAnimation());
-      UIHumanResourceWidget humanResourceWidget = new UIHumanResourceWidget(UIHRResourceStyle);
-      UINaturalResourcesWidget naturalResourcesWidget = new UINaturalResourcesWidget(UINRResourceStyle);
+      projectAdvancementWidget = new UIProjectAdvancementWidget(game.mAssets.getSkin(), game.mAssets.getWormHoleAnimation());
+      humanResourceWidget = new UIHumanResourceWidget(game,UIHRResourceStyle);
+      naturalResourcesWidget = new UINaturalResourcesWidget(game,UINRResourceStyle);
 
       RightSideUI = new Table();
 
       RightSideUI.add(projectAdvancementWidget);
       RightSideUI.row();
-      RightSideUI.add(humanResourceWidget).expandX();
+      RightSideUI.add(humanResourceWidget).fill();
       RightSideUI.row();
-      RightSideUI.add(naturalResourcesWidget).expandX();
+      RightSideUI.add(naturalResourcesWidget).fill();
+
+      projectAdvancementWidget.getPrefWidth();
+      RightSideUI.debugAll();
+      RightSideUI.setPosition(getViewport().getWorldWidth() - RightSideUI.getPrefWidth(), getViewport().getWorldHeight() - RightSideUI.getPrefHeight() / 2.0f);
 
 
       humanResourceWidget.addListener(new ChangeListener() {
@@ -124,15 +124,44 @@ public class UIStage extends Stage {
             }
          }
       });
-
+      this.addActor(RightSideUI);
    }
 
 
+   public void resize(int width, int height) {
 
-   public void resize (int width, int height){
-      this.getViewport().update(width, height, true);
+      float hSize, wSize;
+      if (height < width) {
+         hSize = (float) height;
+         wSize = hSize * ratio;
+      } else {
+         wSize = (float) width;
+         hSize = wSize / ratio;
+
+      }
+      this.getViewport().update((int) wSize, (int) hSize, true);
+      RightSideUI.setPosition(getViewport().getWorldWidth() - RightSideUI.getPrefWidth(), getViewport().getWorldHeight() - RightSideUI.getPrefHeight() / 2.0f);
    }
 
+   /*@Override
+   public void act(float delta){
+      super.act();
+      projectAdvancementWidget.setTimePlayedMs (game.gameWorld.gameWorldController.getTimePlayedMs());
+   }*/
+   private void updateTimePlayed() {
+      projectAdvancementWidget.setTimePlayedMs(game.gameWorld.gameWorldController.getTimePlayedMs());
+   }
+   private void updateHumanResources(){
+      this.humanResourceWidget.setValues(game.gameWorld.gameWorldController.getHumanResources());
+   }
+   private void updateResources(){
+      naturalResourcesWidget.setValues(game.gameWorld.gameWorldController.getResources());
+   }
+   public void updateUI(){
+      updateTimePlayed();
+      updateHumanResources();
+      updateResources();
+   }
    public class MyChangeListener extends ChangeListener{
       public MyChangeListener (){
          super();
