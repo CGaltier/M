@@ -17,10 +17,12 @@
 },
   com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
   default: { up: button-standard-48x48, down: button-selected-48x48, checked: button-selected-48x48, disabled: button-disabled-48x48 },
+  slant: { up: button-standard-51x32, down: button-selected-51x32, checked: button-selected-51x32, disabled: button-disabled-51x32 },
   transparent: { },
 },
   com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
   default: { up: button-standard-48x48, down: button-selected-48x48, checked: button-selected-48x48, disabled: button-disabled-48x48, font: normaltext, fontColor: black },
+  slant: { up: button-standard-51x32, down: button-selected-51x32, checked: button-selected-51x32, over: button-over-51x32, disabled: button-disabled-51x32, font: normaltext, fontColor: white },
 },
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
       default: { titleFont: normaltext, background: window-background, titleFontColor: white }

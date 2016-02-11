@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.cgaltier.mgame.MGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.cgaltier.mgame.Utils.Global;
 
 
 /**
@@ -23,9 +24,14 @@ public class HorizontalButtonGroup extends HorizontalGroup{
 
    Array<MyButtonInToolbar> array;
    MGame game;
+   private boolean on;
+   private boolean finishedAnimation;
+   private int finishedAnimatingButton;
 
    public HorizontalButtonGroup (MGame game){
       array = new Array<MyButtonInToolbar>();
+      finishedAnimation = true;
+      finishedAnimatingButton =0;
    }
 
    public void memoPosition() {
@@ -41,6 +47,7 @@ public class HorizontalButtonGroup extends HorizontalGroup{
    }
 
    public void hideToolbar(){
+      on = false;
       float duration = 0.2f;
       float move = -10.0f;
       float alphaStart = 1.0f;
@@ -48,8 +55,11 @@ public class HorizontalButtonGroup extends HorizontalGroup{
       Interpolation alphaInterpolation = Interpolation.fade;
       Interpolation moveInterpolation = Interpolation.linear;
       int buttonIndex = 0;
+      finishedAnimation = false;
+      finishedAnimatingButton=0;
       for (MyButtonInToolbar button : array) {
          buttonIndex++;
+         button.terminateAnim();
          //button.setPosition(button.memoPosX, button.memoPosY);
          //button.setColor(button.getColor().r, button.getColor().g, button.getColor().b, alphaStart);
          button .addAction(
@@ -62,11 +72,30 @@ public class HorizontalButtonGroup extends HorizontalGroup{
                   Actions.moveBy(move, 0, duration, moveInterpolation),
                   Actions.alpha(alphaEnd, duration, alphaInterpolation)),
                   Actions.after(Actions.hide()),
-                  Actions.after(Actions.sizeTo(button.getWidth(), button.memoPosHeight))));
-
+                  Actions.after(Actions.sizeTo(button.getWidth(), button.memoPosHeight)),
+            new Action() {
+               public boolean act(float delta) {
+                  incFinishedAnimatingButton();
+                  return true;
+               };
+            }));
       }
    }
+   private void incFinishedAnimatingButton(){
+      finishedAnimatingButton += 1;
+      Global.logger.info("Finished animating button :"+finishedAnimatingButton+" on :"+array.size );
+      if (finishedAnimatingButton==array.size-1)
+      {
+         finishedAnimatingButton=0;
+         finishedAnimation=true;
+         Global.logger.info("Finished animation");
+      }
+   }
+   public boolean finishedAnimation(){
+      return finishedAnimation;
+   }
    public void showToolbar(){
+      on = true;
       //float duration = 0.25f;
       float duration = 1.0f;
       float move = 10.0f;
@@ -76,6 +105,7 @@ public class HorizontalButtonGroup extends HorizontalGroup{
       Interpolation moveInterpolation = Interpolation.linear;
       int buttonIndex = 0;
       for (MyButtonInToolbar button : array) {
+         button.terminateAnim();
          //button.setPosition(button.memoPosX- move, button.memoPosY);
          //button.setColor(button.getColor().r, button.getColor().g, button.getColor().b, alphaStart);
          //warning with show/hide, if hide somewhere show must be done, else sequence doesn't seem to work and only final pos / alpha will pop (i.e. no animation)
@@ -103,14 +133,18 @@ public class HorizontalButtonGroup extends HorizontalGroup{
       }
    }
    public void showTopDown(){
+      on = true;
       float duration = 0.25f;
       float alphaStart = 0.0f;
       final float alphaEnd = 1.0f;
       Interpolation alphaInterpolation = Interpolation.fade;
       Interpolation moveInterpolation = Interpolation.linear;
       int buttonIndex = 0;
-      for (MyButtonInToolbar button : array) {
+      finishedAnimation = false;
+      finishedAnimatingButton=0;
 
+      for (MyButtonInToolbar button : array) {
+         button.terminateAnim();
          //button.setPosition(button.memoPosX, button.memoPosY+button.memoPosHeight);
          //button.setSize(button.getWidth(), 0.0f);
          //button.setColor(button.getColor().r, button.getColor().g, button.getColor().b, alphaStart);
@@ -133,11 +167,18 @@ public class HorizontalButtonGroup extends HorizontalGroup{
                         this.actor.setPosition(((MyButtonInToolbar) actor).memoPosX, ((MyButtonInToolbar) actor).memoPosY);
                         return true;
                         };
-                     }));
+                     },
+                  new Action() {
+                     public boolean act(float delta) {
+                     incFinishedAnimatingButton();
+                     return true;
+                     };
+                  }));
             buttonIndex++;
       }
    }
    public void showDownTop(){
+      on = true;
       float duration = 0.25f;
       float alphaStart = 0.0f;
       final float alphaEnd = 1.0f;
@@ -146,7 +187,7 @@ public class HorizontalButtonGroup extends HorizontalGroup{
 
       int buttonIndex = 0;
       for (MyButtonInToolbar button : array) {
-
+         button.terminateAnim();
          //button.setPosition(button.memoPosX, button.memoPosY);
          //button.setSize(button.getWidth(), 0.0f);
          //button.setColor(button.getColor().r, button.getColor().g, button.getColor().b, alphaStart);
@@ -176,5 +217,13 @@ public class HorizontalButtonGroup extends HorizontalGroup{
 
    public void hideToolbarNoAnim() {
 
+   }
+
+   public boolean isOn() {
+      return on;
+   }
+
+   public void setOn(boolean on) {
+      this.on=on;
    }
 }

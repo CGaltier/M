@@ -35,28 +35,60 @@ button-selected-48x48
   index: -1
 button-standard-48x48
   rotate: false
-  xy: 133, 15
+  xy: 233, 65
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-window-close_disabled
+button-disabled-51x32
   rotate: false
-  xy: 233, 97
-  size: 16, 16
-  orig: 16, 16
+  xy: 133, 31
+  size: 51, 32
+  split: 16, 16, 1, 1
+  orig: 51, 32
   offset: 0, 0
   index: -1
-window-close_selected
+button-over-51x32
+  rotate: false
+  xy: 283, 81
+  size: 51, 32
+  split: 16, 16, 1, 1
+  orig: 51, 32
+  offset: 0, 0
+  index: -1
+button-selected-51x32
+  rotate: false
+  xy: 186, 31
+  size: 51, 32
+  split: 16, 16, 1, 1
+  orig: 51, 32
+  offset: 0, 0
+  index: -1
+button-standard-51x32
+  rotate: false
+  xy: 336, 81
+  size: 51, 32
+  split: 16, 16, 1, 1
+  orig: 51, 32
+  offset: 0, 0
+  index: -1
+window-close_disabled
   rotate: false
   xy: 1, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+window-close_selected
+  rotate: false
+  xy: 239, 47
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 window-close_standard
   rotate: false
-  xy: 183, 47
+  xy: 389, 97
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

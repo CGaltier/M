@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cgaltier.mgame.MGame;
@@ -27,13 +28,15 @@ import com.cgaltier.mgame.UIElements.UIHumanResourceWidget;
 import com.cgaltier.mgame.UIElements.UINaturalResourcesWidget;
 import com.cgaltier.mgame.UIElements.UIProjectAdvancementWidget;
 import com.cgaltier.mgame.UIElements.MyButtonInToolbar;
+import com.cgaltier.mgame.Utils.Global;
 
 /**
  * Created by Christian on 20/01/2016.
  */
 public class TestScreen extends AbstractMScreen {
-   public TextButton btnShowMenu;
-   public TextButton btnHideMenu;
+   public TextButton btnToolbar1;
+   public TextButton btnToolbar2;
+   public TextButton btnToolbar3;
 
 
    public TextButton btnWindow2;
@@ -57,6 +60,9 @@ public class TestScreen extends AbstractMScreen {
 
    HorizontalButtonGroup menu2;
    HorizontalButtonGroup menu3;
+   HorizontalButtonGroup menu4;
+   HorizontalButtonGroup menu5;
+   HorizontalButtonGroup menu6;
 
    InputMultiplexer multiplexer ;
 
@@ -131,35 +137,62 @@ public class TestScreen extends AbstractMScreen {
       HorizontalGroup menu = new HorizontalGroup();
       menu.setPosition(20, 40);
       menu.space(5);
-      btnShowMenu = new TextButton("Tool 1", game.mAssets.getSkinAdvanced());
-      btnHideMenu = new TextButton("Tool 2", game.mAssets.getSkinAdvanced());
+      btnToolbar1 = new TextButton("Tool 1", game.mAssets.getSkinAdvanced());
+      btnToolbar2 = new TextButton("Tool 2", game.mAssets.getSkinAdvanced());
+      btnToolbar3 = new TextButton("Tool 3", game.mAssets.getSkinAdvanced());
 
-      menu.addActor(btnShowMenu);
-      menu.addActor(btnHideMenu);
+      menu.addActor(btnToolbar1);
+      menu.addActor(btnToolbar2);
+      menu.addActor(btnToolbar3);
       stage.addActor(menu);
 
       menu2 = new HorizontalButtonGroup(game);
       menu2.setPosition(20, 100);
-      menu2.space(0.5f);
-      menu2.addButton(new MyButtonInToolbar("Text", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("lorem ipsum", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("cogito ergo", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("slurp", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("miam", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("gloups", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("Smurch", game.mAssets.getSkinAdvanced()));
-      menu2.addButton(new MyButtonInToolbar("KIKOOULOL", game.mAssets.getSkinAdvanced()));
+      menu2.space(2.0f);
+      menu2.addButton(new MyButtonInToolbar("Text", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("lorem ipsum", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("cogito ergo", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("slurp", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("miam", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("gloups", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("Smurch", game.mAssets.getSkinAdvanced(),true));
+      menu2.addButton(new MyButtonInToolbar("KIKOOULOL", game.mAssets.getSkinAdvanced(),true));
 
       stage.addActor(menu2);
 
       menu3 = new HorizontalButtonGroup(game);
       menu3.setPosition(20, 100);
-      menu3.space(0.5f);
-      menu3.addButton(new MyButtonInToolbar("1", game.mAssets.getSkinAdvanced()));
-      menu3.addButton(new MyButtonInToolbar("2", game.mAssets.getSkinAdvanced()));
-      menu3.addButton(new MyButtonInToolbar("3", game.mAssets.getSkinAdvanced()));
-      menu3.addButton(new MyButtonInToolbar("4", game.mAssets.getSkinAdvanced()));
+      menu3.space(2.0f);
+      menu3.addButton(new MyButtonInToolbar("1", game.mAssets.getSkinAdvanced(),true));
+      menu3.addButton(new MyButtonInToolbar("2", game.mAssets.getSkinAdvanced(),true));
+      menu3.addButton(new MyButtonInToolbar("3", game.mAssets.getSkinAdvanced(),true));
+      menu3.addButton(new MyButtonInToolbar("4", game.mAssets.getSkinAdvanced(),true));
       stage.addActor(menu3);
+
+      TextButton.TextButtonStyle style = game.mAssets.getSkinAdvanced().get("slant", TextButton.TextButtonStyle.class);
+
+      menu4 = new HorizontalButtonGroup(game);
+      menu4.setPosition(20, 100);
+      menu4.space(-8.0f);
+      menu4.addButton(new MyButtonInToolbar("Badoum", style,true));
+      menu4.addButton(new MyButtonInToolbar("Bah", style,true));
+      menu4.addButton(new MyButtonInToolbar("Padam", style,true));
+      menu4.addButton(new MyButtonInToolbar("Poum", style,true));
+      menu4.addButton(new MyButtonInToolbar("Tchaaa", style,true));
+      menu4.addButton(new MyButtonInToolbar("Tsing-boum", style,true));
+      stage.addActor(menu4);
+
+
+      menu2.validate();//computes layout
+      menu3.validate();//computes layout
+      menu4.validate();//computes layout
+      menu2.memoPosition();
+      menu3.memoPosition();
+      menu4.memoPosition();
+      menu3.setVisible(false);
+      menu4.setVisible(false);
+      menu2.setOn(true);
+
 
       //menu3.setVisible(false);
 
@@ -168,18 +201,49 @@ public class TestScreen extends AbstractMScreen {
             showMenu();
          }
       });*/
-      btnShowMenu.addListener(new ChangeListener() {
+      btnToolbar1.addListener(new ClickListener() {
          @Override
-         public void changed(ChangeEvent event, Actor actor) {
-            //Global.logger.info("button changed");
-            showTool1();
-         }
-      });
-      btnHideMenu.addListener(new ChangeListener() {
-         @Override
-         public void changed(ChangeEvent event, Actor actor) {
+         public void clicked(InputEvent event, float x, float y) {
             //Global.logger.info("button changed");
             showTool2();
+         }
+         @Override
+         public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor){
+            Global.logger.info("Enter on button 1");
+         }
+         @Override
+         public void exit (InputEvent event, float x, float y, int pointer, Actor toActor){
+            Global.logger.info("Exit off button 1");
+         }
+      });
+      btnToolbar2.addListener(new ClickListener() {
+         @Override
+         public void clicked(InputEvent event, float x, float y) {
+            //Global.logger.info("button changed");
+            showTool3();
+         }
+         @Override
+         public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor){
+            Global.logger.info("Enter on button 2");
+         }
+         @Override
+         public void exit (InputEvent event, float x, float y, int pointer, Actor toActor){
+            Global.logger.info("Exit off button 2");
+         }
+      });
+      btnToolbar3.addListener(new ClickListener() {
+         @Override
+         public void clicked(InputEvent event, float x, float y) {
+            //Global.logger.info("button changed");
+            showTool4();
+         }
+         @Override
+         public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor){
+            Global.logger.info("Enter on button 3");
+         }
+         @Override
+         public void exit (InputEvent event, float x, float y, int pointer, Actor toActor){
+            Global.logger.info("Exit off button 3");
          }
       });
       multiplexer.addProcessor(stage);
@@ -188,13 +252,44 @@ public class TestScreen extends AbstractMScreen {
 
 
    }
-   private void showTool1(){
-      menu3.hideToolbar();
-      menu2.showTopDown();
-   }
    private void showTool2(){
-      menu2.hideToolbar();
-      menu3.showTopDown();
+      if ( !menu2.finishedAnimation() ||
+           !menu3.finishedAnimation() ||
+           !menu4.finishedAnimation() )
+         return;
+      menu2.setVisible(true);
+      if (!menu2.isOn()){
+         if (menu3.isOn())
+            menu3.hideToolbar();
+         if (menu4.isOn())
+            menu4.hideToolbar();
+      menu2.showTopDown();}
+   }
+   private void showTool3(){
+      if ( !menu2.finishedAnimation() ||
+      !menu3.finishedAnimation() ||
+      !menu4.finishedAnimation() )
+         return;
+      menu3.setVisible(true);
+      if (!menu3.isOn()){
+         if (menu2.isOn())
+            menu2.hideToolbar();
+         if(menu4.isOn())
+            menu4.hideToolbar();
+      menu3.showTopDown();}
+   }
+   private void showTool4(){
+      if ( !menu2.finishedAnimation() ||
+      !menu3.finishedAnimation() ||
+      !menu4.finishedAnimation() )
+         return;
+      menu4.setVisible(true);
+      if (!menu4.isOn()){
+         if(menu2.isOn())
+            menu2.hideToolbar();
+         if(menu3.isOn())
+            menu3.hideToolbar();
+         menu4.showTopDown();}
    }
 
    @Override
@@ -243,9 +338,15 @@ public class TestScreen extends AbstractMScreen {
    @Override
    public void show() {
       Gdx.input.setInputProcessor(multiplexer);
-      stage.draw();
-      menu2.memoPosition();
-      menu3.memoPosition();
+
+
+/*
+      menu4.memoPosition();
+      menu5.memoPosition();
+      menu6.memoPosition();
+      menu4.showTopDown();
+      menu5.showTopDown();
+      menu6.showTopDown();*/
    }
    public void renderUi(float delta) {
 

@@ -136,7 +136,7 @@ public class UINaturalResourcesWidget extends Button {
       }
       public MyDialog(String title, WindowStyle windowStyle, TextButtonStyle style) {
          super(title, windowStyle);
-         Button button =new TextButton("close", style);
+         Button button =new MyButtonInToolbar("Close", game.mAssets.getSkinAdvanced(),true);
          add(button).fill();
          MyCloseButtonListener listener = new MyCloseButtonListener(this);
          button.addListener(listener);
@@ -150,6 +150,7 @@ public class UINaturalResourcesWidget extends Button {
 
    public void clicked(){
       Dialog dialog = new MyDialog("Natural resources", game.mAssets.getSkinAdvanced().get(Window.WindowStyle.class)/*new Window.WindowStyle (style.font, Color.WHITE,null)*/,style);
+      dialog.setSize(100,200);
       dialog.show(this.getStage());
    }
    public void setValues (final Resources resources){
