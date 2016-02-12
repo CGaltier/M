@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -20,8 +23,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cgaltier.mgame.MGame;
+import com.cgaltier.mgame.MyShader;
 import com.cgaltier.mgame.UIElements.HorizontalButtonGroup;
 import com.cgaltier.mgame.UIElements.MyTextButton;
 import com.cgaltier.mgame.UIElements.UIHumanResourceWidget;
@@ -39,6 +44,7 @@ public class TestScreen extends AbstractMScreen {
    public TextButton btnToolbar3;
 
 
+   public Array<MyShader> shaders;
    public TextButton btnWindow2;
    public TextButton btnMap2;
    public TextButton btnWait2;
@@ -65,12 +71,29 @@ public class TestScreen extends AbstractMScreen {
    HorizontalButtonGroup menu6;
 
    InputMultiplexer multiplexer ;
+   Texture background ;
+   FrameBuffer frameBuffer;
 
+   int currentShader ;
    public TestScreen (MGame game){
       super(game);
+      shaders = new Array <MyShader>();
+      shaders.add(new MyShader("grayscale"));
+      shaders.add(new MyShader("blur"));
+      shaders.add(new MyShader("inverted"));
+      shaders.add(new MyShader("sepia"));
+      shaders.add(new MyShader("vignette"));
+      shaders.add(new MyShader("videofilter"));
+      shaders.add(new MyShader(null));
+      currentShader = 0;
+
+      frameBuffer = new FrameBuffer(Pixmap.Format.RGB888,Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),false);
+      background = game.mAssets.getBackgroundImage();
+      batch = new SpriteBatch();
       multiplexer = new InputMultiplexer();
 
       viewport = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+      //stage = new Stage(viewport, batch );
       stage = new Stage(viewport);
       //stage.setDebugAll(true);
       tableContainer1 = new Table();
@@ -194,6 +217,7 @@ public class TestScreen extends AbstractMScreen {
       menu2.setOn(true);
 
 
+
       //menu3.setVisible(false);
 
       /*btnWindow.addListener(new InputListener() {
@@ -302,6 +326,9 @@ public class TestScreen extends AbstractMScreen {
       if(keyCode == Input.Keys.ESCAPE){
          game.setMainMenuScreen();
          return true;}
+      if(keyCode == Input.Keys.F1){
+         currentShader = Math.floorMod(currentShader+1,shaders.size);
+         return true;}
       return false;
    }
 
@@ -370,9 +397,41 @@ public class TestScreen extends AbstractMScreen {
       Gdx.gl.glClearColor(0, 110, 0, 1);
       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+      frameBuffer.bind();
+
+      //background and UI do not share the batch, it caused problem with the button pulse coloring
+      batch.begin();
+      batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+      batch.draw(background, 0, 0, 0, 0, background.getWidth(), background.getHeight());
+      batch.end();
 
       update(delta);
       renderUi(delta);
       viewport.apply();
+
+      frameBuffer.unbind();
+
+      batch.setShader(shaders.get(currentShader).getProgram());
+      shaders.get(currentShader).setResolutionUniform();
+      batch.begin();
+
+      //batch.draw(texture, x,y,width,height,srcX,srcY,srcWidth,srcHeight,flipX,flipY);
+      batch.draw(frameBuffer.getColorBufferTexture(),
+      0.0f, 0.0f,
+      frameBuffer.getColorBufferTexture().getWidth(), frameBuffer.getColorBufferTexture().getHeight(),
+      0, 0,
+      frameBuffer.getColorBufferTexture().getWidth(), frameBuffer.getColorBufferTexture().getHeight(),false,true);
+
+
+      batch.end();
+      batch.setShader(null);
+   }
+   @Override
+   public void dispose (){
+      batch.dispose();
+      frameBuffer.dispose();
+      for (MyShader shader : shaders){
+         shader.dispose();
+      }
    }
 }

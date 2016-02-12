@@ -38,6 +38,7 @@ public class Global {
    public static final String SKIN_ASSET_ADVANCED="advancedUI.json";
    public static final String PLIC_SOUND="plic.mp3";
    public static final String WORMHOLE_ANIM_ATLAS="wormhole_anim.atlas";
+   public static final String BACKGROUND_IMAGE ="landscape-mountains-nature-clouds.jpg";
    public static final UIStrings strings = new UIStrings();
 
 

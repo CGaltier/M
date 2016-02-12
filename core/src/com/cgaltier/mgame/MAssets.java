@@ -26,6 +26,7 @@ public class MAssets implements Disposable{
    public Array <AtlasRegion> UIImagesRegions ;
 
 
+
    public MAssets (){
       assetManager = new AssetManager();
       thisInstance = this;
@@ -41,6 +42,7 @@ public class MAssets implements Disposable{
       assetManager.load(Global.PLIC_SOUND,Sound.class);
       assetManager.load(Global.WORMHOLE_ANIM_ATLAS,TextureAtlas.class);
       assetManager.load(Global.UI_IMAGES_ATLAS,TextureAtlas.class);
+      assetManager.load(Global.BACKGROUND_IMAGE,Texture.class);
 
       assetManager.finishLoading();
       prepareWormHoleAnimation();
@@ -77,7 +79,9 @@ public class MAssets implements Disposable{
       wormHoleRegions.sort (new AtlasRegionComparator());
       wormHoleAnimation=new Animation(Global.WORMHOLE_ANIM_DURATION, wormHoleRegions, Animation.PlayMode.LOOP);
    }
-
+   public Texture getBackgroundImage(){
+       return assetManager.get(Global.BACKGROUND_IMAGE,Texture.class);
+   }
    public AtlasRegion getHRCryoRegion() {
       for (AtlasRegion region:UIImagesRegions)
       {
